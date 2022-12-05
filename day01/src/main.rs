@@ -1,10 +1,10 @@
-use std::cmp;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn main() {
     let mut current: i32 = 0;
-    let mut max: i32 = 0;
+
+    let mut v: Vec<i32> = Vec::new();
 
     let filename = "./input.txt";
     // Open the file in read-only mode (ignoring errors).
@@ -18,9 +18,18 @@ fn main() {
         if !line.is_empty() {
             current += line.parse::<i32>().unwrap();
         } else {
-            max = cmp::max(current, max);
+            v.push(current);
             current = 0;
         }
+        println!("read line {}", line);
     }
-    println!("max {}", max);
+
+    // NOTE: Need to add blank line after end of input
+    v.sort();
+    v.reverse();
+    let first: &i32 = &v[0];
+    let second: &i32 = &v[1];
+    let third: &i32 = &v[2];
+    println!("Max calories {}", first+second+third);
+    println!("{:?}", v);
 }
